@@ -17,7 +17,7 @@
 #pragma config OSCIOFNC = 1 // disable secondary osc
 #pragma config FPBDIV = 00 // divide sysclk freq by 1 for peripheral bus clock
 #pragma config FCKSM = 11 // do not enable clock switch
-#pragma config WDTPS = 10100 // use slowest wdt
+#pragma config WDTPS = 00000 // use slowest wdt
 #pragma config WINDIS = 1 // wdt no window mode
 #pragma config FWDTEN = 0 // wdt disabled
 #pragma config FWDTWINSZ = 11 // wdt window at 25%
@@ -68,10 +68,13 @@ int main() {
         }
         else {
             _CP0_SET_COUNT(0);
-            while(_CP0_GET_COUNT() < 24000000) {
+            while(_CP0_GET_COUNT() < 24000) {
                 LATAbits.LATA4 = 0;
             }
-            LATAbits.LATA4 = 1;
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 24000) {
+                LATAbits.LATA4 = 1;
+            }
         }
     }
 }
