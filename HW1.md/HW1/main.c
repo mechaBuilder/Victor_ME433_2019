@@ -16,7 +16,7 @@
 #pragma config POSCMOD = 10 // high speed crystal mode
 #pragma config OSCIOFNC = 1 // disable secondary osc
 #pragma config FPBDIV = 00 // divide sysclk freq by 1 for peripheral bus clock
-#pragma config FCKSM = 1x // do not enable clock switch
+#pragma config FCKSM = 11 // do not enable clock switch
 #pragma config WDTPS = 10100 // use slowest wdt
 #pragma config WINDIS = 1 // wdt no window mode
 #pragma config FWDTEN = 0 // wdt disabled
