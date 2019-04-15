@@ -2782,50 +2782,100 @@ package type TQ</description>
 <wire x1="-7.62" y1="10.16" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
 </symbol>
 <symbol name="PIC32MX270F256D">
-<pin name="1.B9" x="-68.58" y="50.8" length="middle"/>
-<pin name="2.C6" x="-68.58" y="40.64" length="middle"/>
-<pin name="3.C7" x="-68.58" y="30.48" length="middle"/>
-<pin name="4.C8" x="-68.58" y="20.32" length="middle"/>
-<pin name="5.C9" x="-68.58" y="10.16" length="middle"/>
-<pin name="6.VSS" x="-68.58" y="0" length="middle"/>
-<pin name="7.VCAP" x="-68.58" y="-10.16" length="middle"/>
-<pin name="8.B10" x="-68.58" y="-20.32" length="middle"/>
-<pin name="9.B11" x="-68.58" y="-30.48" length="middle"/>
-<pin name="10.VUSB3V3" x="-68.58" y="-40.64" length="middle"/>
-<pin name="11.B13" x="-68.58" y="-50.8" length="middle"/>
-<pin name="12.A10" x="-50.8" y="-60.96" length="middle" rot="R90"/>
-<pin name="13.A7" x="-40.64" y="-60.96" length="middle" rot="R90"/>
-<pin name="14.B14" x="-30.48" y="-60.96" length="middle" rot="R90"/>
-<pin name="15.B15" x="-20.32" y="-60.96" length="middle" rot="R90"/>
-<pin name="16.AVSS" x="-10.16" y="-60.96" length="middle" rot="R90"/>
-<pin name="17.AVDD" x="0" y="-60.96" length="middle" rot="R90"/>
-<pin name="18.MCLR" x="10.16" y="-60.96" length="middle" rot="R90"/>
-<pin name="19.A0" x="20.32" y="-60.96" length="middle" rot="R90"/>
-<pin name="20.A1" x="30.48" y="-60.96" length="middle" rot="R90"/>
-<pin name="21.B0" x="40.64" y="-60.96" length="middle" rot="R90"/>
-<pin name="22.B1" x="50.8" y="-60.96" length="middle" rot="R90"/>
-<pin name="23.B2" x="71.12" y="-50.8" length="middle" rot="R180"/>
-<pin name="24.B3" x="71.12" y="-40.64" length="middle" rot="R180"/>
-<pin name="25.C0" x="71.12" y="-30.48" length="middle" rot="R180"/>
-<pin name="26.C1" x="71.12" y="-20.32" length="middle" rot="R180"/>
-<pin name="27.C2" x="71.12" y="-10.16" length="middle" rot="R180"/>
-<pin name="28.VDD" x="71.12" y="0" length="middle" rot="R180"/>
-<pin name="29.VSS" x="71.12" y="10.16" length="middle" rot="R180"/>
-<pin name="30.A2" x="71.12" y="20.32" length="middle" rot="R180"/>
-<pin name="31.A3" x="71.12" y="30.48" length="middle" rot="R180"/>
-<pin name="32.A8" x="71.12" y="40.64" length="middle" rot="R180"/>
-<pin name="33.B4" x="71.12" y="50.8" length="middle" rot="R180"/>
-<pin name="34.A4" x="50.8" y="60.96" length="middle" rot="R270"/>
-<pin name="35.A9" x="40.64" y="60.96" length="middle" rot="R270"/>
-<pin name="36.C3" x="30.48" y="60.96" length="middle" rot="R270"/>
-<pin name="37.C4" x="20.32" y="60.96" length="middle" rot="R270"/>
-<pin name="P$38" x="10.16" y="60.96" length="middle" rot="R270"/>
-<pin name="P$39" x="0" y="60.96" length="middle" rot="R270"/>
-<pin name="P$40" x="-10.16" y="60.96" length="middle" rot="R270"/>
-<pin name="P$41" x="-20.32" y="60.96" length="middle" rot="R270"/>
-<pin name="P$42" x="-30.48" y="60.96" length="middle" rot="R270"/>
-<pin name="P$43" x="-40.64" y="60.96" length="middle" rot="R270"/>
-<pin name="P$44" x="-50.8" y="60.96" length="middle" rot="R270"/>
+<pin name="1.B9" x="-30.48" y="25.4" length="middle"/>
+<pin name="2.C6" x="-30.48" y="20.32" length="middle"/>
+<pin name="3.C7" x="-30.48" y="15.24" length="middle"/>
+<pin name="4.C8" x="-30.48" y="10.16" length="middle"/>
+<pin name="5.C9" x="-30.48" y="5.08" length="middle"/>
+<pin name="6.VSS" x="-30.48" y="0" length="middle"/>
+<pin name="7.VCAP" x="-30.48" y="-5.08" length="middle"/>
+<pin name="8.D+/B10" x="-30.48" y="-10.16" length="middle"/>
+<pin name="9.D-/B11" x="-30.48" y="-15.24" length="middle"/>
+<pin name="10.VUSB3V3" x="-30.48" y="-20.32" length="middle"/>
+<pin name="11.B13" x="-30.48" y="-25.4" length="middle"/>
+<pin name="23.B2" x="30.48" y="-25.4" length="middle" rot="R180"/>
+<pin name="24.B3" x="30.48" y="-20.32" length="middle" rot="R180"/>
+<pin name="25.C0" x="30.48" y="-15.24" length="middle" rot="R180"/>
+<pin name="26.C1" x="30.48" y="-10.16" length="middle" rot="R180"/>
+<pin name="27.C2" x="30.48" y="-5.08" length="middle" rot="R180"/>
+<pin name="28.VDD" x="30.48" y="0" length="middle" rot="R180"/>
+<pin name="29.VSS" x="30.48" y="5.08" length="middle" rot="R180"/>
+<pin name="30.A2" x="30.48" y="10.16" length="middle" rot="R180"/>
+<pin name="31.A3" x="30.48" y="15.24" length="middle" rot="R180"/>
+<pin name="32.A8" x="30.48" y="20.32" length="middle" rot="R180"/>
+<pin name="33.B4" x="30.48" y="25.4" length="middle" rot="R180"/>
+<pin name="34.A4" x="25.4" y="30.48" length="middle" rot="R270"/>
+<pin name="35.A9" x="20.32" y="30.48" length="middle" rot="R270"/>
+<pin name="36.C3" x="15.24" y="30.48" length="middle" rot="R270"/>
+<pin name="37.C4" x="10.16" y="30.48" length="middle" rot="R270"/>
+<pin name="38.C5" x="5.08" y="30.48" length="middle" rot="R270"/>
+<pin name="39.VSS" x="0" y="30.48" length="middle" rot="R270"/>
+<pin name="40.VDD" x="-5.08" y="30.48" length="middle" rot="R270"/>
+<pin name="41.USBID/B5" x="-10.16" y="30.48" length="middle" rot="R270"/>
+<pin name="42.VBUS" x="-15.24" y="30.48" length="middle" rot="R270"/>
+<pin name="43.B7" x="-20.32" y="30.48" length="middle" rot="R270"/>
+<pin name="44.B8" x="-25.4" y="30.48" length="middle" rot="R270"/>
+<pin name="12.A10" x="-25.4" y="-30.48" length="middle" rot="R90"/>
+<pin name="13.A7" x="-20.32" y="-30.48" length="middle" rot="R90"/>
+<pin name="14.B14" x="-15.24" y="-30.48" length="middle" rot="R90"/>
+<pin name="15.B15" x="-10.16" y="-30.48" length="middle" rot="R90"/>
+<pin name="16.AVSS" x="-5.08" y="-30.48" length="middle" rot="R90"/>
+<pin name="17.AVDD" x="0" y="-30.48" length="middle" rot="R90"/>
+<pin name="18.MCLR" x="5.08" y="-30.48" length="middle" rot="R90"/>
+<pin name="19.A0" x="10.16" y="-30.48" length="middle" rot="R90"/>
+<pin name="20.A1" x="15.24" y="-30.48" length="middle" rot="R90"/>
+<pin name="21.PGED1/B0" x="20.32" y="-30.48" length="middle" rot="R90"/>
+<pin name="22.PGEC1/B1" x="25.4" y="-30.48" length="middle" rot="R90"/>
+<text x="-12.7" y="5.08" size="1.27" layer="94">&gt;NAME</text>
+<text x="2.54" y="5.08" size="1.27" layer="94">&gt;VALUE</text>
+<wire x1="-27.94" y1="27.94" x2="27.94" y2="27.94" width="0.254" layer="94"/>
+<wire x1="27.94" y1="27.94" x2="27.94" y2="-27.94" width="0.254" layer="94"/>
+<wire x1="27.94" y1="-27.94" x2="-27.94" y2="-27.94" width="0.254" layer="94"/>
+<wire x1="-27.94" y1="-27.94" x2="-27.94" y2="27.94" width="0.254" layer="94"/>
+<pin name="P$1" x="53.34" y="50.8" length="middle"/>
+<pin name="P$2" x="53.34" y="40.64" length="middle"/>
+<pin name="P$3" x="53.34" y="30.48" length="middle"/>
+<pin name="P$4" x="53.34" y="20.32" length="middle"/>
+<pin name="P$5" x="53.34" y="10.16" length="middle"/>
+<pin name="P$6" x="53.34" y="0" length="middle"/>
+<pin name="P$7" x="53.34" y="-10.16" length="middle"/>
+<pin name="P$8" x="53.34" y="-20.32" length="middle"/>
+<pin name="P$9" x="53.34" y="-30.48" length="middle"/>
+<pin name="P$10" x="53.34" y="-40.64" length="middle"/>
+<pin name="P$11" x="53.34" y="-50.8" length="middle"/>
+<pin name="P$12" x="71.12" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$13" x="81.28" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$14" x="91.44" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$15" x="101.6" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$16" x="111.76" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$17" x="121.92" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$18" x="132.08" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$19" x="142.24" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$20" x="152.4" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$21" x="162.56" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$22" x="172.72" y="-60.96" length="middle" rot="R90"/>
+<pin name="P$23" x="193.04" y="-50.8" length="middle" rot="R180"/>
+<pin name="P$24" x="193.04" y="-40.64" length="middle" rot="R180"/>
+<pin name="P$25" x="193.04" y="-30.48" length="middle" rot="R180"/>
+<pin name="P$26" x="193.04" y="-20.32" length="middle" rot="R180"/>
+<pin name="P$27" x="193.04" y="-10.16" length="middle" rot="R180"/>
+<pin name="P$28" x="193.04" y="0" length="middle" rot="R180"/>
+<pin name="P$29" x="193.04" y="10.16" length="middle" rot="R180"/>
+<pin name="P$30" x="193.04" y="20.32" length="middle" rot="R180"/>
+<pin name="P$31" x="193.04" y="30.48" length="middle" rot="R180"/>
+<pin name="P$32" x="193.04" y="40.64" length="middle" rot="R180"/>
+<pin name="P$33" x="193.04" y="50.8" length="middle" rot="R180"/>
+<pin name="P$34" x="172.72" y="60.96" length="middle" rot="R270"/>
+<pin name="P$35" x="162.56" y="60.96" length="middle" rot="R270"/>
+<pin name="P$36" x="152.4" y="60.96" length="middle" rot="R270"/>
+<pin name="P$37" x="142.24" y="60.96" length="middle" rot="R270"/>
+<pin name="P$38" x="132.08" y="60.96" length="middle" rot="R270"/>
+<pin name="P$39" x="121.92" y="60.96" length="middle" rot="R270"/>
+<pin name="P$40" x="111.76" y="60.96" length="middle" rot="R270"/>
+<pin name="P$41" x="101.6" y="60.96" length="middle" rot="R270"/>
+<pin name="P$42" x="91.44" y="60.96" length="middle" rot="R270"/>
+<pin name="P$43" x="81.28" y="60.96" length="middle" rot="R270"/>
+<pin name="P$44" x="71.12" y="60.96" length="middle" rot="R270"/>
 </symbol>
 <symbol name="PB">
 <pin name="1" x="-12.7" y="0" length="middle"/>
@@ -4309,6 +4359,64 @@ package type TQ</description>
 <connect gate="G$1" pin="PGC" pad="5"/>
 <connect gate="G$1" pin="PGD" pad="4"/>
 <connect gate="G$1" pin="VDD" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="PIC32MX270F256D">
+<gates>
+<gate name="G$1" symbol="PIC32MX270F256D" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TQFP44">
+<connects>
+<connect gate="G$1" pin="1.B9" pad="1"/>
+<connect gate="G$1" pin="10.VUSB3V3" pad="10"/>
+<connect gate="G$1" pin="11.B13" pad="11"/>
+<connect gate="G$1" pin="12.A10" pad="12"/>
+<connect gate="G$1" pin="13.A7" pad="13"/>
+<connect gate="G$1" pin="14.B14" pad="14"/>
+<connect gate="G$1" pin="15.B15" pad="15"/>
+<connect gate="G$1" pin="16.AVSS" pad="16"/>
+<connect gate="G$1" pin="17.AVDD" pad="17"/>
+<connect gate="G$1" pin="18.MCLR" pad="18"/>
+<connect gate="G$1" pin="19.A0" pad="19"/>
+<connect gate="G$1" pin="2.C6" pad="2"/>
+<connect gate="G$1" pin="20.A1" pad="20"/>
+<connect gate="G$1" pin="21.PGED1/B0" pad="21"/>
+<connect gate="G$1" pin="22.PGEC1/B1" pad="22"/>
+<connect gate="G$1" pin="23.B2" pad="23"/>
+<connect gate="G$1" pin="24.B3" pad="24"/>
+<connect gate="G$1" pin="25.C0" pad="25"/>
+<connect gate="G$1" pin="26.C1" pad="26"/>
+<connect gate="G$1" pin="27.C2" pad="27"/>
+<connect gate="G$1" pin="28.VDD" pad="28"/>
+<connect gate="G$1" pin="29.VSS" pad="29"/>
+<connect gate="G$1" pin="3.C7" pad="3"/>
+<connect gate="G$1" pin="30.A2" pad="30"/>
+<connect gate="G$1" pin="31.A3" pad="31"/>
+<connect gate="G$1" pin="32.A8" pad="32"/>
+<connect gate="G$1" pin="33.B4" pad="33"/>
+<connect gate="G$1" pin="34.A4" pad="34"/>
+<connect gate="G$1" pin="35.A9" pad="35"/>
+<connect gate="G$1" pin="36.C3" pad="36"/>
+<connect gate="G$1" pin="37.C4" pad="37"/>
+<connect gate="G$1" pin="38.C5" pad="38"/>
+<connect gate="G$1" pin="39.VSS" pad="39"/>
+<connect gate="G$1" pin="4.C8" pad="4"/>
+<connect gate="G$1" pin="40.VDD" pad="40"/>
+<connect gate="G$1" pin="41.USBID/B5" pad="41"/>
+<connect gate="G$1" pin="42.VBUS" pad="42"/>
+<connect gate="G$1" pin="43.B7" pad="43"/>
+<connect gate="G$1" pin="44.B8" pad="44"/>
+<connect gate="G$1" pin="5.C9" pad="5"/>
+<connect gate="G$1" pin="6.VSS" pad="6"/>
+<connect gate="G$1" pin="7.VCAP" pad="7"/>
+<connect gate="G$1" pin="8.D+/B10" pad="8"/>
+<connect gate="G$1" pin="9.D-/B11" pad="9"/>
 </connects>
 <technologies>
 <technology name=""/>
