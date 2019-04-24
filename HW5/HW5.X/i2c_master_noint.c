@@ -1,7 +1,12 @@
 // I2C Master utilities, 100 kHz, using polling rather than interrupts
-// The functions must be callled in the correct order as per the I2C protocol
+// The functions must be called in the correct order as per the I2C protocol
 // Change I2C1 to the I2C channel you are using
 // I2C pins need pull-up resistors, 2k-10k
+
+#include "expander.h"
+#include "i2c_master_noint.h"
+#include<xc.h>           // processor SFR definitions
+#include<sys/attribs.h>  // __ISR macro
 
 void i2c_master_setup(void) {
   I2C2BRG = 90; 					//some number for 400kHz; // I2CBRG = [1/(2*Fsck) - PGD]*Pblck - 2 

@@ -1,5 +1,5 @@
-#include "expander.c"
-#include "i2c_master_noint.c"
+#include "expander.h"
+#include "i2c_master_noint.h"
 
 #include<xc.h>           // processor SFR definitions
 #include<sys/attribs.h>  // __ISR macro
@@ -60,16 +60,15 @@ int main() {
     //TRISAbits.TRISA4 = 0;
     //TRISBbits.TRISB4 = 1;
     //LATAbits.LATA4 = 1;
+    ANSELBbits.ANSB2 = 0;
+	ANSELBbits.ANSB3 = 0;
 
     __builtin_enable_interrupts();
-
+    initExpander();
+    char val;
+    setExpander(0,1);
     while(1) {
-
-        if (!getExpander()) {
-            setExpander();
-        }
-        else {
-           ;
-        }
+        val = (getExpander()>>7);
+        setExpander(0,val);
     }
 }
