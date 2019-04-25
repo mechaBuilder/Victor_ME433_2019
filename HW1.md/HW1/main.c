@@ -68,11 +68,11 @@ int main() {
         }
         else {
             _CP0_SET_COUNT(0);
-            while(_CP0_GET_COUNT() < 12000) {
+            while(_CP0_GET_COUNT() < 4800000) {
                 LATAbits.LATA4 = 0;
             }
             _CP0_SET_COUNT(0);
-            while(_CP0_GET_COUNT() < 12000) {
+            while(_CP0_GET_COUNT() < 4800000) {
                 LATAbits.LATA4 = 1;
             }
         }

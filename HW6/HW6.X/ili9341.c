@@ -1,6 +1,10 @@
 #include <xc.h>
 #include "ili9341.h"
 
+// spi pins
+#define CS LATBbits.LATB7
+#define DC LATBbits.LATB15
+
 void LCD_init() {
     int time = 0;
     

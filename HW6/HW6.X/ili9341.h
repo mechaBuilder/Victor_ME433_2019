@@ -5,6 +5,8 @@
 #ifndef ILI9341_H__
 #define ILI9341_H__
 
+
+
 // Color definitions
 #define ILI9341_BLACK       0x0000  ///<   0,   0,   0
 #define ILI9341_NAVY        0x000F  ///<   0,   0, 123
@@ -192,10 +194,6 @@ static const char ASCII[96][5] = {
 #define MADCTL_RGB 0x00  ///< Red-Green-Blue pixel order
 #define MADCTL_BGR 0x08  ///< Blue-Green-Red pixel order
 #define MADCTL_MH  0x04  ///< LCD refresh right to left
-
-// spi pins
-#define CS LATBbits.LATB7
-#define DC LATBbits.LATB15
 
 // functions
 void LCD_init();

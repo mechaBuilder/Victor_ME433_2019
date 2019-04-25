@@ -1,9 +1,6 @@
-#include "ili9341.h"     // (1) initialize SPI
-                         // (2) initialize LCD
-                         // (3) write colot to a single pixel
-                         // (4) set color of background)
 #include<xc.h>           // processor SFR definitions
 #include<sys/attribs.h>  // __ISR macro
+#include "ili9341.h"
 
 // DEVCFG0
 #pragma config DEBUG = 11 // no debugging
@@ -40,6 +37,7 @@
 #pragma config FUSBIDIO = 1 // USB pins controlled by USB module
 #pragma config FVBUSONIO = 1 // USB BUSON controlled by USB module
 
+
 int main() {
 
     __builtin_disable_interrupts();
@@ -60,22 +58,40 @@ int main() {
     TRISAbits.TRISA4 = 0;
     TRISBbits.TRISB4 = 1;
     LATAbits.LATA4 = 1;
-    ANSELBbits.ANSB2 = 0;
-	ANSELBbits.ANSB3 = 0;
 
     __builtin_enable_interrupts();
     
 
+    SPI1_init();
+    LCD_init();
+    LCD_clearScreen(ILI9341_BLACK);
     while(1) {
-        _CP0_SET_COUNT(0);
-        while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
-            LATAbits.LATA4 = 0;
-            }
-        _CP0_SET_COUNT(0);
-        while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
-            LATAbits.LATA4 = 1;
         
+        int i,j,k;
+        
+        for (i = 0; i<41; i++) {
+            LCD_drawPixel(10+i, 10, ILI9341_WHITE);
         }
-    
+        for (j = 0; j<21; j++) {
+            LCD_drawPixel(25, 10+j, ILI9341_WHITE);
+        }
+        for (k = 0; k<41; k++) {
+            LCD_drawPixel(10+k, 30, ILI9341_WHITE);
+        }
+	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
+	// remember the core timer runs at half the sysclk
+        if (!PORTBbits.RB4) {
+            LATAbits.LATA4 = 0;
+        }
+        else {
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 4800000) {
+                LATAbits.LATA4 = 0;
+            }
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 4800000) {
+                LATAbits.LATA4 = 1;
+            }
+        }
     }
 }
