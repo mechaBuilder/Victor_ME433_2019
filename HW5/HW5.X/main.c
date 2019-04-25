@@ -1,6 +1,5 @@
 #include "expander.h"
 #include "i2c_master_noint.h"
-
 #include<xc.h>           // processor SFR definitions
 #include<sys/attribs.h>  // __ISR macro
 
@@ -39,7 +38,6 @@
 #pragma config FUSBIDIO = 1 // USB pins controlled by USB module
 #pragma config FVBUSONIO = 1 // USB BUSON controlled by USB module
 
-
 int main() {
 
     __builtin_disable_interrupts();
@@ -69,6 +67,18 @@ int main() {
     setExpander(0,1);
     while(1) {
         val = (getExpander()>>7);
-        setExpander(0,val);
+        if (!val) {
+            setExpander(0,val);
+        }
+        else {
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
+                setExpander(0,0);
+            }
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
+                setExpander(0,1);
+            }
+        }
     }
 }
