@@ -55,9 +55,9 @@ int main() {
     DDPCONbits.JTAGEN = 0;
 
     // do your TRIS and LAT commands here
-    //TRISAbits.TRISA4 = 0;
-    //TRISBbits.TRISB4 = 1;
-    //LATAbits.LATA4 = 1;
+    TRISAbits.TRISA4 = 0;
+    TRISBbits.TRISB4 = 1;
+    LATAbits.LATA4 = 1;
     ANSELBbits.ANSB2 = 0;
 	ANSELBbits.ANSB3 = 0;
 
@@ -66,19 +66,15 @@ int main() {
     char val;
     setExpander(0,1);
     while(1) {
+        _CP0_SET_COUNT(0);
+        while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
+            LATAbits.LATA4 = 0;
+            }
+        _CP0_SET_COUNT(0);
+        while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
+            LATAbits.LATA4 = 1;
+        }
         val = (getExpander()>>7);
-        if (!val) {
-            setExpander(0,val);
-        }
-        else {
-            _CP0_SET_COUNT(0);
-            while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
-                setExpander(0,0);
-            }
-            _CP0_SET_COUNT(0);
-            while(_CP0_GET_COUNT() < 4800000) { //24Mhz/5Hz = 4800000
-                setExpander(0,1);
-            }
-        }
+        setExpander(0,val);
     }
 }
