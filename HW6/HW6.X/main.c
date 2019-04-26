@@ -1,6 +1,8 @@
 #include<xc.h>           // processor SFR definitions
 #include<sys/attribs.h>  // __ISR macro
 #include "ili9341.h"
+#include<stdio.h>
+#include<string.h>
 
 // DEVCFG0
 #pragma config DEBUG = 11 // no debugging
@@ -37,6 +39,10 @@
 #pragma config FUSBIDIO = 1 // USB pins controlled by USB module
 #pragma config FVBUSONIO = 1 // USB BUSON controlled by USB module
 
+#define x  28
+#define y  32
+#define c1 ILI9341_WHITE
+#define c2 ILI9341_RED
 
 int main() {
 
@@ -64,20 +70,46 @@ int main() {
 
     SPI1_init();
     LCD_init();
-    LCD_clearScreen(ILI9341_BLACK);
+    LCD_clearScreen(c2);
+    char message[100];
+    int count = 0;
+    //sprintf(message,"Hello world!");
+    //print2LCD(message, x, y, c1, c2);
+    unsigned short update, bar_size = 100;
+    double FPS;
+    //progressBar(x, y+50, 80, 50);
     while(1) {
+        update = 0;
+        _CP0_SET_COUNT(0);  
+        while (update<=bar_size) {
+            sprintf(message,"Hello world %d %%!", update);
+            print2LCD(message, x, y, c1, c2);
+            progressBar(x, y+50, bar_size, update);
+
+            while (_CP0_GET_COUNT()<=2400000){;}
+            count=_CP0_GET_COUNT();
+            FPS=1.00/(count/24000000);
+            sprintf(message, "FPS = %d", FPS);
+            print2LCD(message, x, y+100, ILI9341_BLUE, c2);
+            update++;
+            _CP0_SET_COUNT(0);
+        }
         
-        int i,j,k;
+        //int length = strlen(message);
+
+        //char donkey = 'H';
+        //drawLetter(donkey, 100, 100, ILI9341_WHITE, ILI9341_BLACK);
+        //int i,j,k;
         
-        for (i = 0; i<41; i++) {
-            LCD_drawPixel(10+i, 10, ILI9341_WHITE);
-        }
-        for (j = 0; j<21; j++) {
-            LCD_drawPixel(25, 10+j, ILI9341_WHITE);
-        }
-        for (k = 0; k<41; k++) {
-            LCD_drawPixel(10+k, 30, ILI9341_WHITE);
-        }
+        //for (i = 0; i<41; i++) {
+         //   LCD_drawPixel(10+i, 10, ILI9341_WHITE);
+        //}
+        //for (j = 0; j<21; j++) {
+        //    LCD_drawPixel(25, 10+j, ILI9341_WHITE);
+        //}
+        //for (k = 0; k<41; k++) {
+        //    LCD_drawPixel(10+k, 30, ILI9341_WHITE);
+        //}
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
 	// remember the core timer runs at half the sysclk
         if (!PORTBbits.RB4) {
@@ -93,5 +125,6 @@ int main() {
                 LATAbits.LATA4 = 1;
             }
         }
+    
     }
 }

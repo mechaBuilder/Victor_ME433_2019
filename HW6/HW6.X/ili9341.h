@@ -206,4 +206,9 @@ void LCD_setAddr(unsigned short x, unsigned short y, unsigned short w, unsigned 
 void LCD_drawPixel(unsigned short x, unsigned short y, unsigned short color);
 void LCD_clearScreen(unsigned short color);
 
+//HW6 added functions
+void drawLetter(char letter, unsigned short x, unsigned short y, unsigned c1, unsigned c2);
+void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, unsigned c2);
+void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update);
+
 #endif

@@ -265,3 +265,50 @@ void LCD_clearScreen(unsigned short color) {
     
     CS = 1; // CS
 }
+
+void drawLetter(char letter, unsigned short x, unsigned short y, unsigned c1, unsigned c2) {
+    unsigned short i = 0, j = 0;
+    for (i=0; i<5; i++) {
+        char color = ASCII[letter - 0x20][i];
+        for (j=0; j<7; j++) {
+            char bit = ((color >> j) & 1); 
+            if (bit == 1) {
+                LCD_drawPixel(x+i, y+j, c1);            // c1 & c2 are colors
+            }
+            else {
+                LCD_drawPixel(x+i, y+j, c2);
+            }
+        }
+    }
+}
+
+void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, unsigned c2) {
+    unsigned short k = 0;
+        while(message[k]){ 
+            //display_character(array[i]); 
+            drawLetter(message[k], x + (5*k), y, c1, c2); // each letter has 5 spaces
+            k++;
+        }
+}
+
+void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update) {
+    unsigned short l = 0, m = 0, n = 0, p = 0;
+    
+    for (n=0; n<length; n++) {
+        for (l=0; l<5; l++) {
+            char color = ASCII[' '][l]; //0x20
+            for (m=0; m<7; m++) {         
+                LCD_drawPixel(x+l+n, y+m, ILI9341_WHITE);
+            }
+        }
+    }
+    n=0;
+    for (p=0; p<update; p++) {
+        for (l=0; l<5; l++) {
+            char color = ASCII[' '][l]; //0x20
+            for (m=0; m<7; m++) {         
+                LCD_drawPixel(x+l+p, y+m, ILI9341_BLACK);
+            }
+        }
+    }
+}
