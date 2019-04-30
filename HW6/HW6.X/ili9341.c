@@ -291,24 +291,14 @@ void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, u
         }
 }
 
-void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update) {
-    unsigned short l = 0, m = 0, n = 0, p = 0;
-    
-    for (n=0; n<length; n++) {
-        for (l=0; l<5; l++) {
-            char color = ASCII[' '][l]; //0x20
-            for (m=0; m<7; m++) {         
-                LCD_drawPixel(x+l+n, y+m, ILI9341_WHITE);
+void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4) {
+    unsigned short l = 0, m = 0, n = 0, p = 0, start;
+    start = x + update;
+    //draws the white bar w/ length equal length
+    for (n=0; n<=(length-update); n++) {
+        for (m=0; m<7; m++) {  //height       
+                LCD_drawPixel(start + n, y+m, c3);
+                LCD_drawPixel(x + update, y+m, c4);
             }
         }
-    }
-    n=0;
-    for (p=0; p<update; p++) {
-        for (l=0; l<5; l++) {
-            char color = ASCII[' '][l]; //0x20
-            for (m=0; m<7; m++) {         
-                LCD_drawPixel(x+l+p, y+m, ILI9341_BLACK);
-            }
-        }
-    }
 }

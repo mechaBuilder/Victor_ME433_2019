@@ -42,7 +42,9 @@
 #define x  28
 #define y  32
 #define c1 ILI9341_WHITE
-#define c2 ILI9341_RED
+#define c2 ILI9341_PURPLE
+#define c3 ILI9341_DARKGREEN
+#define c4 ILI9341_YELLOW
 
 int main() {
 
@@ -72,44 +74,24 @@ int main() {
     LCD_init();
     LCD_clearScreen(c2);
     char message[100];
-    int count = 0;
-    //sprintf(message,"Hello world!");
-    //print2LCD(message, x, y, c1, c2);
     unsigned short update, bar_size = 100;
-    double FPS;
-    //progressBar(x, y+50, 80, 50);
+    double FPS = 0.0, count = 0.0; 
     while(1) {
         update = 0;
-        _CP0_SET_COUNT(0);  
-        while (update<=bar_size) {
-            sprintf(message,"Hello world %d %%!", update);
+         
+        while (update <= bar_size) {
+            _CP0_SET_COUNT(0);
+            sprintf(message,"Hello world %d %% ", update);
             print2LCD(message, x, y, c1, c2);
-            progressBar(x, y+50, bar_size, update);
-
+            progressBar(x,y+50,bar_size,update, c3,c4);
             while (_CP0_GET_COUNT()<=2400000){;}
             count=_CP0_GET_COUNT();
-            FPS=1.00/(count/24000000);
-            sprintf(message, "FPS = %d", FPS);
-            print2LCD(message, x, y+100, ILI9341_BLUE, c2);
+            FPS=1.00/(count/24000000.0);
+            sprintf(message, "FPS = %.2f", FPS);
+            print2LCD(message, x, y+100, c3, c2);
             update++;
-            _CP0_SET_COUNT(0);
         }
-        
-        //int length = strlen(message);
-
-        //char donkey = 'H';
-        //drawLetter(donkey, 100, 100, ILI9341_WHITE, ILI9341_BLACK);
-        //int i,j,k;
-        
-        //for (i = 0; i<41; i++) {
-         //   LCD_drawPixel(10+i, 10, ILI9341_WHITE);
-        //}
-        //for (j = 0; j<21; j++) {
-        //    LCD_drawPixel(25, 10+j, ILI9341_WHITE);
-        //}
-        //for (k = 0; k<41; k++) {
-        //    LCD_drawPixel(10+k, 30, ILI9341_WHITE);
-        //}
+       
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
 	// remember the core timer runs at half the sysclk
         if (!PORTBbits.RB4) {
