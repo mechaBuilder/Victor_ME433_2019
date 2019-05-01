@@ -12,7 +12,8 @@
 #define CTRL2_G_config 0b10001000
 #define CTRL3_C_config 0b00000100
 
-int whoAmI(void);
-void imu_init();
+
+void imu_init(void);
+unsigned short whoAmI(void);
 
 #endif

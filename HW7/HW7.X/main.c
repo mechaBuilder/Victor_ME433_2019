@@ -69,6 +69,9 @@ int main() {
     TRISAbits.TRISA4 = 0;
     TRISBbits.TRISB4 = 1;
     LATAbits.LATA4 = 1;
+    
+    ANSELBbits.ANSB2 = 0;
+	ANSELBbits.ANSB3 = 0;
 
     __builtin_enable_interrupts();
     
@@ -99,7 +102,7 @@ int main() {
             update++;
             
             //WHO AM I
-            input = 10;//whoAmI();
+            input = whoAmI();
             sprintf(message, "Who Am I = %d", input);
             print2LCD(message, x, y+200, c1, c5);
             
