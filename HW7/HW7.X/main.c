@@ -49,6 +49,10 @@
 #define c4 ILI9341_YELLOW
 #define c5 ILI9341_RED
 
+#define LENGTH 14
+
+//#define OUT_TEMP_L 0x20
+
 int main() {
 
     __builtin_disable_interrupts();
@@ -84,6 +88,10 @@ int main() {
     unsigned short update, bar_size = 100;
     double FPS = 0.0, count = 0.0; 
     
+    unsigned short data[LENGTH]; //14
+    signed short temp, gyroX, gyroY, gyroZ, accelX, accelY, accelZ;
+    
+    
     int input = 0;
     
     while(1) {
@@ -93,21 +101,41 @@ int main() {
             _CP0_SET_COUNT(0);
             sprintf(message,"Hello world %d %% ", update);
             print2LCD(message, x, y, c1, c2);
-            progressBar(x,y+50,bar_size,update, c3,c4);
+            progressBar(x,y+20,bar_size,update, c3,c4);
             while (_CP0_GET_COUNT()<=2400000){;}
             count=_CP0_GET_COUNT();
             FPS=1.00/(count/24000000.0);
             sprintf(message, "FPS = %.2f", FPS);
-            print2LCD(message, x, y+100, c3, c2);
+            print2LCD(message, x, y+30, c3, c2);
             update++;
             
             //WHO AM I
             input = whoAmI();
             sprintf(message, "Who Am I = %d", input);
-            print2LCD(message, x, y+200, c1, c5);
+            print2LCD(message, x, y+50, c1, c5);
+            
+            //Let's get some readings from IMU
+            I2C_read_multiple(SLAVE_ADDR, OUT_TEMP_L, data, LENGTH);
+            temp = data[1] << 8 | data[0];
+            gyroX = data[3] << 8 | data[2];
+            gyroY = data[5] << 8 | data[4];
+            gyroZ = data[7] << 8 | data[6];
+            //gyroX, gyroY, gyroZ, accelX, accelY, accelZ;
+            
+            //unsigned short val = data[12];
+            sprintf(message, "temp = %d", temp);
+            print2LCD(message, x, y+60, c1, c5);
+            sprintf(message, "gyroX = %d", gyroX);
+            print2LCD(message, x, y+70, c1, c5);
+            sprintf(message, "gyroY = %d", gyroY);
+            print2LCD(message, x, y+80, c1, c5);
+            sprintf(message, "gyroZ = %d", gyroZ);
+            print2LCD(message, x, y+90, c1, c5);
             
         }
        
+
+        
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
 	// remember the core timer runs at half the sysclk
         if (!PORTBbits.RB4) {

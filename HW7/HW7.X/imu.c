@@ -31,3 +31,23 @@ unsigned short whoAmI(void) {
     return input;
 }
 
+void I2C_read_multiple(unsigned char address, unsigned char register2read, unsigned char *data, int length) { 
+    //unsigned char data[length];
+    unsigned short i;
+    i2c_master_start();                     // Begin the start sequence
+    i2c_master_send(address << 1 | 0);      // 0 indicate writing
+    i2c_master_send(register2read);         // write to WHO AM I Register
+    i2c_master_restart();                   // send a RESTART so we can begin reading
+    i2c_master_send(address << 1 | 1);      // send slave address, left shifted by 1,
+                                            // and then a 1 in lsb, indicating read
+    for (i = 0; i < length-1; i++) { //14
+        data[i] = i2c_master_recv();        // receive a byte from the bus
+        //if (length == 13)
+        i2c_master_ack(0);                  // send NACK (0):  master needs more bytes
+    }
+    data[length - 1] = i2c_master_recv();   // receive a byte from the bus
+    i2c_master_ack(1);                      // send NACK (1):  master needs no more bytes
+    i2c_master_stop();                      // send STOP:  end transmission, give up bus
+}
+
+
