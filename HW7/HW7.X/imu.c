@@ -7,12 +7,22 @@ void imu_init(void) {
     i2c_master_setup();
     i2c_master_start();                     // make the start bit
     i2c_master_send(SLAVE_ADDR<<1|0);       // 0 indicate writing
-    i2c_master_send(CTRL1_XL);              // write to CTRL1_XL register
-    i2c_master_send(CTRL1_XL_config);       // 
-    i2c_master_send(CTRL2_G);               // write to CTRL2_G register
-    i2c_master_send(CTRL2_G_config);        // 
+    i2c_master_send(CTRL1_XL);
+    i2c_master_send(CTRL1_XL_config);
+    i2c_master_stop();
+    // write to CTRL1_XL register
+    i2c_master_setup();
+    i2c_master_start();
+    i2c_master_send(SLAVE_ADDR<<1|0);      // 
+    i2c_master_send(CTRL2_G);
+    i2c_master_send(CTRL2_G_config);
+    i2c_master_stop();// write to CTRL2_G register
+    
+    // 
+    i2c_master_setup();
+    i2c_master_start();
     i2c_master_send(CTRL3_C);               // write to CTRL3_C register
-    i2c_master_send(CTRL3_C_config);        // 
+    i2c_master_send(CTRL3_C_config); 
     i2c_master_stop();                      // make the stop bit
 }
 
@@ -35,10 +45,10 @@ void I2C_read_multiple(unsigned char address, unsigned char register2read, unsig
     //unsigned char data[length];
     unsigned short i;
     i2c_master_start();                     // Begin the start sequence
-    i2c_master_send(address << 1 | 0);      // 0 indicate writing
+    i2c_master_send(address << 1);      // 0 indicate writing
     i2c_master_send(register2read);         // write to WHO AM I Register
     i2c_master_restart();                   // send a RESTART so we can begin reading
-    i2c_master_send(address << 1 | 1);      // send slave address, left shifted by 1,
+    i2c_master_send((address << 1) | 1);      // send slave address, left shifted by 1,
                                             // and then a 1 in lsb, indicating read
     for (i = 0; i < length-1; i++) { //14
         data[i] = i2c_master_recv();        // receive a byte from the bus
