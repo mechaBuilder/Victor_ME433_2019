@@ -210,4 +210,11 @@ void LCD_clearScreen(unsigned short color);
 void drawLetter(char letter, unsigned short x, unsigned short y, unsigned c1, unsigned c2);
 void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, unsigned c2);
 void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4);
+
+//HW7 added functions
+void progressBarX_pos(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4);
+void progressBarX_neg(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4);
+
+void barX(unsigned short x, unsigned short y, unsigned short length, unsigned short Ax, unsigned c1, unsigned c2);
+void barY(unsigned short x, unsigned short y, unsigned short length, unsigned short Ay, unsigned c1, unsigned c2);
 #endif
