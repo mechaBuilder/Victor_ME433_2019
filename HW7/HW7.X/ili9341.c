@@ -1,5 +1,6 @@
 #include <xc.h>
 #include "ili9341.h"
+#include<math.h>
 
 // spi pins
 #define CS LATBbits.LATB7
@@ -291,90 +292,42 @@ void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, u
         }
 }
 
-void progressBar(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4) {
-    unsigned short m = 0, n = 0, start;
-    start = x + update;
-    //draws the white bar w/ length equal length
-    for (n=0; n<=(length-update); n++) {
-        for (m=0; m<7; m++) {  //height       
-                LCD_drawPixel(start + n, y+m, c3);
-                LCD_drawPixel(x + update, y+m, c4);
-            }
-        }
-}
-
-//HW7 added functions:
-
-void progressBarX_pos(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4) {
-    unsigned short m = 0, n = 0, start;
-    start = x + update;
-    //draws the white bar w/ length equal length
-    for (n=0; n<=(length-update); n++) {
-        for (m=0; m<7; m++) {  //height       
-                LCD_drawPixel(start + n, y+m, c3);
-                LCD_drawPixel(x + update, y+m, c4);
-            }
-        }
-}
-
-void progressBarX_neg(unsigned short x, unsigned short y, unsigned short length, unsigned short update, unsigned c3, unsigned c4) {
-    unsigned short m = 0, n = 0, start;
-    start = x + update;
-    //draws the white bar w/ length equal length
-    for (n=0; n<=(length-abs(update)); n++) {
-        for (m=0; m<7; m++) {  //height       
-                LCD_drawPixel(start - n, y+m, c3);
-                LCD_drawPixel(x - abs(update), y+m, c4);
-            }
-        }
-}
-
-void barX(unsigned short x, unsigned short y, unsigned short length, unsigned short Ax, unsigned c1, unsigned c2) {
-    unsigned short m = 0, n = 0, l = 0, start;
-    signed short neg = 0;
-        //start = x + update;
-    //draws the white bar w/ length equal length
+void barX(unsigned short x, unsigned short y, unsigned short length, signed short Ax, unsigned c1, unsigned c2) {
+    unsigned short m = 0, n = 0, l = 0, neg = 0;
     for (n=0; n<=length; n++) {
         for (m=0; m<7; m++) {  //height       
-                LCD_drawPixel(x + n, y+m, c1);
-                LCD_drawPixel(x - n, y+m, c1);
-                if (Ax >= 0) {
-                    for (l = 0; l <= Ax; l++) {
-                        LCD_drawPixel(x + l, y+m, c2);
-                    }
+            LCD_drawPixel(x + n, y+m, c1);
+            LCD_drawPixel(x - n, y+m, c1);
+            if (Ax >= 0) {
+                for (l = 0; l <= Ax; l++) {
+                    LCD_drawPixel(x + l, y+m, c2);
                 }
-                if (Ax < 0){ 
-                    for (neg = 0; neg <= abs(Ax); neg++) {
-                        LCD_drawPixel(x + neg, y+m, c2);
-                    }
-                }
-
-                
             }
+            if (Ax < 0){ 
+                for (neg = 0; neg <= abs(Ax); neg++) {
+                    LCD_drawPixel(x - neg, y+m, c2);
+                }
+            } 
         }
+    }
 }
 
-void barY(unsigned short x, unsigned short y, unsigned short length, unsigned short Ay, unsigned c1, unsigned c2) {
-    unsigned short m = 0, n = 0, l = 0, start;
-    signed short neg = 0;
-        //start = x + update;
-    //draws the white bar w/ length equal length
+void barY(unsigned short x, unsigned short y, unsigned short length, signed short Ay, unsigned c1, unsigned c2) {
+    unsigned short m = 0, n = 0, l = 0, neg =0;
     for (n=0; n<=length; n++) {
         for (m=0; m<7; m++) {  //height       
-                LCD_drawPixel(x + m, y+n, c1);
-                LCD_drawPixel(x + m, y-n+8, c1);
-                if (Ay >= 0) {
-                    for (l = 0; l <= Ay; l++) {
-                        LCD_drawPixel(x + m, y+l, c2);
-                    }
+            LCD_drawPixel(x + m, y+n, c1);
+            LCD_drawPixel(x + m, y-n+8, c1);
+            if (Ay >= 0) {
+                for (l = 0; l <= Ay; l++) {
+                    LCD_drawPixel(x + m, y+l, c2);
                 }
-                if (Ay < 0){ 
-                    for (neg = 0; neg <= abs(Ay); neg++) {
-                        LCD_drawPixel(x + m, y-neg, c2);
-                    }
+            }
+            if (Ay < 0){ 
+                for (neg = 0; neg <= abs(Ay); neg++) {
+                    LCD_drawPixel(x + m, y-neg, c2);
                 }
-
-                
             }
         }
+    }
 }

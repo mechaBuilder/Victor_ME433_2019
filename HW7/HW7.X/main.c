@@ -93,144 +93,37 @@ int main() {
     imu_init();
     LCD_clearScreen(c2);
     char message[100];
-    unsigned short update, bar_size = 100;
-    double FPS = 0.0, count = 0.0; 
-    
     unsigned char data[LENGTH]; //14
-    signed short temp, gyroX, gyroY, gyroZ, accelX, accelY, accelZ;
-    
-    
-    int input = 0;
-    
+    signed short aX, aY;
     while(1) {
         //Read LCM at 20 Hz
         LATAbits.LATA4 = 0;
         _CP0_SET_COUNT(0);
-        while (_CP0_GET_COUNT()<=1200000){;}
+        while (_CP0_GET_COUNT()<=1200000){;} //delay
         LATAbits.LATA4 = 1;
+        
         //WHO AM I
-        input = whoAmI();
+        signed char input = whoAmI();
         sprintf(message, "Who Am I = %d (105)", input);
         print2LCD(message, x, y, c1, c2);
+        
         //Let's get some readings from IMU
         I2C_read_multiple(SLAVE_ADDR, OUT_TEMP_L, data, LENGTH);
-        accelX = (data[9]  << 8) | data[8];
-        accelY = (data[11] << 8) | data[10];
-        sprintf(message, "accelX = %d  ", accelX);
-        print2LCD(message, x, y+10, c1, c2);
-        sprintf(message, "accelY = %d  ", accelY);
-        print2LCD(message, x, y+20, c1, c2);
-        int aX = ((int)accelX/165.0);
-        int aY = ((int)accelY/165.0);
+        aX = (data[9]  << 8) | data[8];
+        aY = (data[11] << 8) | data[10];
         sprintf(message, "aX = %d  ", aX);
-        print2LCD(message, x, y+40, c1, c2);
-        int aXpos = abs(aX);
-        sprintf(message, "aXpos = %d  ", aXpos);
-        print2LCD(message, x, y+50, c1, c2);
-        
-        barX(x0, y0, 100, aX, c3, c5);
-        barY(x0, y0, 100, aY, c3, c5);
-        
-//        if (aX>=0) {
-//            //X+ direction
-//            if (update<=aX) {
-//                while (update<=aX) {
-//                    progressBarX_pos(x0,y0,100,update, c3,c5);
-//                    update++;
-//                }
-//            }
-//            else if (update>aX) {
-//                while (update>aX) {
-//                    progressBarX_pos(x0,y0,100,update, c3,c5);
-//                    update--;
-//                }
-//            }
-//            else {;}
-//        }
-//        else {
-//            //X- direction
-//            if (update>=aX) {
-//                while (update>=aX) {
-//                    progressBarX_neg(x0,y0,100,update, c3,c5);
-//                    update--;
-//                }
-//            }
-//            else if (update<aX) {
-//                while (update<aX) {
-//                    progressBarX_neg(x0,y0,100,update, c3,c5);
-//                    update++;
-//                }
-//            }
-//            else {;}
-//        }
-            
-    
-        
-//        update = 0;
-//         
-//        while (update <= bar_size) {
-//            _CP0_SET_COUNT(0);
-//            sprintf(message,"Hello world %d %% ", update);
-//            print2LCD(message, x, y, c1, c2);
-//            progressBar(x,y+20,bar_size,update, c3,c4);
-//            while (_CP0_GET_COUNT()<=2400000){;}
-//            count=_CP0_GET_COUNT();
-//            FPS=1.00/(count/24000000.0);
-//            sprintf(message, "FPS = %.2f", FPS);
-//            print2LCD(message, x, y+30, c3, c2);
-//            update++;
-//            
-//
-//            
-//            
-//        }
-                    
+        print2LCD(message, x, y+10, c1, c2);
+        sprintf(message, "aY = %d  ", aY);
+        print2LCD(message, x, y+20, c1, c2);
+        signed char aXscaled = ((int)aX/165.0);
+        signed char aYscaled = ((int)aY/165.0);
+        sprintf(message, "aXscaled = %d  ", aXscaled);
+        print2LCD(message, x, y+40, c5, c2);
+        sprintf(message, "aYscaled = %d  ", aYscaled);
+        print2LCD(message, x, y+50, c5, c2);
 
-
-
-            //temp   = (data[1]  << 8) | data[0];
-            //gyroX  = (data[3]  << 8) | data[2];
-            //gyroY  = (data[5]  << 8) | data[4];
-            //gyroZ  = (data[7]  << 8) | data[6];
-        //accelX = (data[9]  << 8) | data[8];
-        //accelY = (data[11] << 8) | data[10];
-            //accelZ = (data[13] << 8) | data[12];
-            //gyroX, gyroY, gyroZ, accelX, accelY, accelZ;
-            
-            //unsigned short val = data[12];
-            //sprintf(message, "temp = %d  ", temp);
-            //print2LCD(message, x, y+60, c1, c5);
-            
-            //sprintf(message, "gyroX = %d  ", gyroX);
-            //print2LCD(message, x, y+70, c1, c5);
-            //sprintf(message, "gyroY = %d  ", gyroY);
-            //print2LCD(message, x, y+80, c1, c5);
-            //sprintf(message, "gyroZ = %d  ", gyroZ);
-            //print2LCD(message, x, y+90, c1, c5);
-            
-//        sprintf(message, "accelX = %d  ", accelX);
-//        print2LCD(message, x, y+100, c1, c5);
-//        sprintf(message, "accelY = %d  ", accelY);
-//        print2LCD(message, x, y+110, c1, c5);
-            //sprintf(message, "accelZ = %d  ", accelZ);
-            //print2LCD(message, x, y+120, c1, c5);
-            
-        
-	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
-	// remember the core timer runs at half the sysclk
-//        if (!PORTBbits.RB4) {
-//            LATAbits.LATA4 = 0;
-//        }
-//        else {
-//            _CP0_SET_COUNT(0);
-//            while(_CP0_GET_COUNT() < 4800000) {
-//                LATAbits.LATA4 = 0;
-//            }
-//            _CP0_SET_COUNT(0);
-//            while(_CP0_GET_COUNT() < 4800000) {
-//                LATAbits.LATA4 = 1;
-//            }
-//        }
-    
+        //Let's draw bars:
+        barX(x0, y0, 100, aXscaled, c3, c5);
+        barY(x0, y0, 100, aYscaled, c3, c5);
     }
 }
