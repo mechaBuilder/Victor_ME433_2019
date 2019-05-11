@@ -26,7 +26,7 @@ char getExpander() {
     char input;
     i2c_master_start();                     // Begin the start sequence
     i2c_master_send(SLAVE_ADDR<<1|0);       // 0 indicate writing
-    i2c_master_send(0x09);                  // write to GPIO
+    i2c_master_send(0x09); 	                 // write to GPIO
     i2c_master_restart();                   // send a RESTART so we can begin reading
     i2c_master_send((SLAVE_ADDR << 1) | 1); // send slave address, left shifted by 1,
                                             // and then a 1 in lsb, indicating read
