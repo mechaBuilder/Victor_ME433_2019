@@ -21,6 +21,8 @@
     <itemPath>ili9341.h</itemPath>
     <itemPath>ili9341.c</itemPath>
     <itemPath>main.c</itemPath>
+    <itemPath>touchscreen.h</itemPath>
+    <itemPath>touchscreen.c</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

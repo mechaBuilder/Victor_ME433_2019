@@ -6,8 +6,7 @@
 #define CS LATBbits.LATB7
 #define DC LATBbits.LATB11
 
-//HW9:
-#define CS2 LATBbits.LATB10
+
 
 
 void LCD_init() {
@@ -194,10 +193,14 @@ void LCD_init() {
 }
 
 void SPI1_init() {
-  SDI1Rbits.SDI1R = 0b0100; // B8 is SDI1
-  RPA1Rbits.RPA1R = 0b0011; // A1 is SDO1
-  TRISBbits.TRISB7 = 0; // CS is B7
-  CS = 1; // CS starts high
+  SDI1Rbits.SDI1R = 0b0100;     // B8 is SDI1
+  RPA1Rbits.RPA1R = 0b0011;     // A1 is SDO1
+  TRISBbits.TRISB7 = 0;         // CS is B7
+  TRISBbits.TRISB10 = 0;        // CS2 is B10
+  CS = 1;                       // CS starts high
+  
+  //HW9 added pin
+  CS2 = 1;                      //for touchscreen
 
   // DC pin
   TRISBbits.TRISB11 = 0;
@@ -205,7 +208,7 @@ void SPI1_init() {
   
   SPI1CON = 0; // turn off the spi module and reset it
   SPI1BUF; // clear the rx buffer by reading from it
-  SPI1BRG = 0; // baud rate to 12 MHz [SPI1BRG = (48000000/(2*desired))-1]
+  SPI1BRG = 3; // baud rate to 12 MHz [SPI1BRG = (48000000/(2*desired))-1]
   SPI1STATbits.SPIROV = 0; // clear the overflow bit
   SPI1CONbits.CKE = 1; // data changes when clock goes from hi to lo (since CKP is 0)
   SPI1CONbits.MSTEN = 1; // master operation
@@ -294,83 +297,4 @@ void print2LCD(char *message, unsigned short x, unsigned short y, unsigned c1, u
             drawLetter(message[k], x + (5*k), y, c1, c2); // each letter has 5 spaces
             k++;
         }
-}
-
-//void barX(unsigned short x, unsigned short y, unsigned short length, signed short Ax, unsigned c1, unsigned c2) {
-//    unsigned short m = 0, n = 0, l = 0, neg = 0;
-//    for (n=0; n<=length; n++) {
-//        for (m=0; m<7; m++) {  //height       
-//            LCD_drawPixel(x + n, y+m, c1);
-//            LCD_drawPixel(x - n, y+m, c1);
-//            if (Ax >= 0) {
-//                for (l = 0; l <= Ax; l++) {
-//                    LCD_drawPixel(x + l, y+m, c2);
-//                }
-//            }
-//            if (Ax < 0){ 
-//                for (neg = 0; neg <= abs(Ax); neg++) {
-//                    LCD_drawPixel(x - neg, y+m, c2);
-//                }
-//            } 
-//        }
-//    }
-//}
-//
-//void barY(unsigned short x, unsigned short y, unsigned short length, signed short Ay, unsigned c1, unsigned c2) {
-//    unsigned short m = 0, n = 0, l = 0, neg =0;
-//    for (n=0; n<=length; n++) {
-//        for (m=0; m<7; m++) {  //height       
-//            LCD_drawPixel(x + m, y+n, c1);
-//            LCD_drawPixel(x + m, y-n+8, c1);
-//            if (Ay >= 0) {
-//                for (l = 0; l <= Ay; l++) {
-//                    LCD_drawPixel(x + m, y+l, c2);
-//                }
-//            }
-//            if (Ay < 0){ 
-//                for (neg = 0; neg <= abs(Ay); neg++) {
-//                    LCD_drawPixel(x + m, y-neg, c2);
-//                }
-//            }
-//        }
-//    }
-//}
-
-//HW9 added functions
-void SPI2_init() {
-    SDI2Rbits.SDI2R = 0b0011;       // B13 is SDI2
-    RPB5Rbits.RPB5R = 0b0100;       // B5 is SDO2
-    TRISBbits.TRISB10 = 0;           // CS2 is B10
-    CS2 = 1;                         // CS2 starts high
-
-    // DC pin
-    //TRISBbits.TRISB11 = 0;
-    //DC = 1;
-  
-    SPI2CON = 0;                    // turn off the spi module and reset it
-    SPI2BUF;                        // clear the rx buffer by reading from it
-    SPI2BRG = 3;                    // baud rate to 12 MHz [SPI1BRG = (48000000/(2*desired))-1]
-    SPI2STATbits.SPIROV = 0;        // clear the overflow bit
-    SPI2CONbits.CKE = 1;            // data changes when clock goes from hi to lo (since CKP is 0)
-    SPI2CONbits.MSTEN = 1;          // master operation
-    SPI2CONbits.ON = 1;             // turn on spi2  
-}
-
-unsigned char spi2_io(unsigned char o) {
-  SPI2BUF = o;
-  while(!SPI2STATbits.SPIRBF) { // wait to receive the byte
-    ;
-  }
-  return SPI2BUF;
-}
-
-void XPT2046_read(unsigned short *x, unsigned short *y, unsigned int *z) {
-    unsigned short i = 0, x1temp=0, x2temp=0; 
-    //get x position: 
-    for (i=0;i<3;i++) {
-        *x = spi2_io(0b11010001);
-        *y = spi2_io(0x00); //= x1temp 
-        *z = spi2_io(0x00); //x2temp =
-        //*x = ((x1temp  << 8) | x2temp);
-    }
 }

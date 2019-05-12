@@ -3,8 +3,7 @@
 #include "ili9341.h"
 #include<stdio.h>
 #include<string.h>
-//#include "i2c_master_noint.h"
-//#include "imu.h"
+#include "touchscreen.h"
 
 // DEVCFG0
 #pragma config DEBUG = 0b11 // no debugging
@@ -82,22 +81,24 @@ int main() {
     TRISBbits.TRISB4 = 1;
     LATAbits.LATA4 = 1;
     
-    ANSELBbits.ANSB2 = 0;
-	ANSELBbits.ANSB3 = 0;
+    //ANSELBbits.ANSB2 = 0;
+	//ANSELBbits.ANSB3 = 0;
 
     __builtin_enable_interrupts();
     
 
     SPI1_init();
-    SPI2_init();
     LCD_init();
-    //imu_init();
     LCD_clearScreen(c2);
+    buttons();                  //Buttons:
+    //touchscreen
+    unsigned short Xpos, Ypos; 
+    int z; 
     char message[100];
-    //unsigned char data[LENGTH]; //14
-    //signed short aX, aY;
+    //for button press:
+    int count = 0, buttonPush = 0, buttonPush_prev = 0, xPixel_prev, yPixel_prev;
     while(1) {
-        //Read LCM at 20 Hz
+        //Heartbeat
         _CP0_SET_COUNT(0);
         while(_CP0_GET_COUNT() < 4800000) {
             LATAbits.LATA4 = 0;
@@ -106,19 +107,38 @@ int main() {
         while(_CP0_GET_COUNT() < 4800000) {
             LATAbits.LATA4 = 1;
         }
-//        //WHO AM I
-//        signed char input = whoAmI();
-        sprintf(message, "Hello World");
-        print2LCD(message, x, y, c1, c2);
-        unsigned short Xpos, Ypos, xtemp, ytemp, ztemp; 
-        int z; 
+        sprintf(message, "HW 9: Touchscreen");
+        print2LCD(message, x, y, ILI9341_WHITE, ILI9341_PURPLE);
+        
+        //Raw touchscreen vals:
         XPT2046_read(&Xpos, &Ypos, &z);
-        sprintf(message, "val1 = %d", Xpos);
-        print2LCD(message, x, y+20, c1, c2);
-        sprintf(message, "val2 = %d", Ypos);
-        print2LCD(message, x, y+30, c1, c2);
-        sprintf(message, "val3 = %d", z);
-        print2LCD(message, x, y+40, c1, c2);
-
+        sprintf(message, "xRaw    = %5d", Xpos);
+        print2LCD(message, x, y+20, ILI9341_WHITE, ILI9341_PURPLE);
+        sprintf(message, "yRaw    = %5d", Ypos);
+        print2LCD(message, x, y+30, ILI9341_WHITE, ILI9341_PURPLE);
+        sprintf(message, "zRaw    = %5d", z);
+        print2LCD(message, x, y+40, ILI9341_WHITE, ILI9341_PURPLE);
+        
+        //Scaled vals:
+        sprintf(message, "xScaled = %5d", xPixel(Xpos));
+        print2LCD(message, x, y+60, ILI9341_WHITE, ILI9341_PURPLE);
+        sprintf(message, "xScaled = %5d", yPixel(Ypos));
+        print2LCD(message, x, y+70, ILI9341_WHITE, ILI9341_PURPLE);
+        
+        //Press button:
+        if (z > 100){
+            buttonPush = 1;
+            xPixel_prev = xPixel(Xpos);
+            yPixel_prev = yPixel(Ypos);           
+        }
+        if (z < 100){
+            buttonPush = 0;
+        }
+        if ((buttonPush == 0) && (buttonPush_prev == 1)){
+            count = count + buttonsPush(xPixel_prev, yPixel_prev);
+        }   
+        buttonPush_prev = buttonPush;
+        sprintf(message, "I = %d", count);
+        print2LCD(message, 130, 200, ILI9341_WHITE, ILI9341_PURPLE);
     }
 }

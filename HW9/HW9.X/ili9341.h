@@ -195,6 +195,9 @@ static const char ASCII[96][5] = {
 #define MADCTL_BGR 0x08  ///< Blue-Green-Red pixel order
 #define MADCTL_MH  0x04  ///< LCD refresh right to left
 
+//HW9:
+#define CS2 LATBbits.LATB10
+
 // functions
 void LCD_init();
 void SPI1_init();
