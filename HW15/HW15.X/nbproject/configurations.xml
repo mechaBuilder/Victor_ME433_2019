@@ -21,6 +21,10 @@
     <itemPath>ili9341.h</itemPath>
     <itemPath>ili9341.c</itemPath>
     <itemPath>main.c</itemPath>
+    <itemPath>motorControl.h</itemPath>
+    <itemPath>motorControl.c</itemPath>
+    <itemPath>camera.h</itemPath>
+    <itemPath>camera.c</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

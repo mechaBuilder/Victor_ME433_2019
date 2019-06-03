@@ -3,6 +3,8 @@
 #include "ili9341.h"
 #include<stdio.h>
 #include<string.h>
+#include "motorControl.h" //PWM & direction pins
+#include "camera.h"         // image processing
 
 // DEVCFG0
 #pragma config DEBUG = 0b11 // no debugging
@@ -42,6 +44,31 @@
 #define x  28
 #define y  32
 
+    unsigned short count = 0;
+
+//Interrupt ISR:
+void __ISR(12, IPL5SOFT) Timer3ISR(void) {          // step 1: ISR
+                                            
+    if (count <101) {
+        count++;
+        OC2RS = OC2RS + 24;
+    }
+    else {
+        count = 0;
+        OC2RS = 0;
+        LATBINV = 0x10;                      //toggle B4
+    }
+    
+    
+
+    IFS0bits.T3IF = 0;                                          //clears the interrupt flag
+
+// how many times has the interrupt occurred?
+
+// set the duty cycle and direction pin
+
+}
+
 int main() {
 
     __builtin_disable_interrupts();
@@ -60,20 +87,32 @@ int main() {
 
     // do your TRIS and LAT commands here
     TRISAbits.TRISA4 = 0;
-    TRISBbits.TRISB4 = 1;
-    LATAbits.LATA4 = 1;
+    //TRISBbits.TRISB4 = 1;
+    //LATAbits.LATA4 = 1;
     
     //ANSELBbits.ANSB2 = 0;
 	//ANSELBbits.ANSB3 = 0;
-
+    
+    //HW15 Interrupt: 
+    PR3 = 59999;       // (PR3 + 1) x N x (1/48MHz) = (1/100Hz); sets the interrupt at 100 Hz
+    TMR3 = 0;          // initialize count to zero
+    T3CONbits.TCKPS = 0b011; // set prescaler N = 8 (1:8)
+    T3CONbits.ON = 1;           // turn on Timer 3
+    IPC3bits.T3IP = 5;          //interupt priority
+    IFS0bits.T3IF = 0;          //clear flag
+    IEC0bits.T3IE = 1;          //enable interrupt
     __builtin_enable_interrupts();
     
 
     SPI1_init();
     LCD_init();
     LCD_clearScreen(ILI9341_PURPLE);
+    
+    //HW15:
+    PWM_init();
 
     char message[100];
+
 
     while(1) {
         //Heartbeat
@@ -87,6 +126,9 @@ int main() {
         }
         sprintf(message, "HW 15: motorControl");
         print2LCD(message, x, y, ILI9341_WHITE, ILI9341_PURPLE);
+        
+        sprintf(message, "count = %d", count);
+        print2LCD(message, x, y+10, ILI9341_WHITE, ILI9341_PURPLE);
         
     }
 }
