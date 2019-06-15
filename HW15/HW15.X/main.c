@@ -4,7 +4,6 @@
 #include<stdio.h>
 #include<string.h>
 #include "motorControl.h" //PWM & direction pins
-#include "camera.h"         // image processing
 
 // DEVCFG0
 #pragma config DEBUG = 0b11 // no debugging
@@ -125,10 +124,13 @@ int main() {
             LATAbits.LATA4 = 1;
         }
         sprintf(message, "HW 15: motorControl");
-        print2LCD(message, x, y, ILI9341_WHITE, ILI9341_PURPLE);
+        print2LCD(message, x, y+100, ILI9341_WHITE, ILI9341_PURPLE);
         
         sprintf(message, "count = %d", count);
-        print2LCD(message, x, y+10, ILI9341_WHITE, ILI9341_PURPLE);
+        print2LCD(message, x, y+110, ILI9341_WHITE, ILI9341_PURPLE);
+        
+        //Camera function to print a row of pixels:
+        LCDprintRow(0, 0);
         
     }
 }

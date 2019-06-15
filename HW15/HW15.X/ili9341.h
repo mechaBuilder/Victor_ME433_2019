@@ -215,4 +215,7 @@ void progressBar(unsigned short x, unsigned short y, unsigned short length, unsi
 void barX(unsigned short x, unsigned short y, unsigned short length, signed short Ax, unsigned c1, unsigned c2);
 void barY(unsigned short x, unsigned short y, unsigned short length, signed short Ay, unsigned c1, unsigned c2);
 
+//HW15 added functions
+void LCDprintRow(unsigned short xCoord, unsigned short yCoord);
+
 #endif
